@@ -22,6 +22,11 @@ export default function App() {
     <>
       <div>
         <table>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
           {users.map((user) => (
             <tr>
               <td>{user.name}</td>
@@ -30,6 +35,12 @@ export default function App() {
             </tr>
           ))}
         </table>
+        <form>
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <input type="tel" placeholder="Phone" />
+          <button type="submit">Add User</button>
+        </form>
       </div>
     </>
   )
