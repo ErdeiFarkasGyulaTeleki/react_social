@@ -34,6 +34,12 @@ export default function App() {
   return (
     <>
       <div>
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="name" placeholder="Name" />
+          <input type="email" name="email" placeholder="Email" />
+          <input type="tel" name="phone" placeholder="Phone" />
+          <button type="submit">Add User</button>
+        </form>
         <table>
           <tr>
             <th>Name</th>
@@ -48,12 +54,6 @@ export default function App() {
             </tr>
           ))}
         </table>
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="name" placeholder="Name" />
-          <input type="email" name="email" placeholder="Email" />
-          <input type="tel" name="phone" placeholder="Phone" />
-          <button type="submit">Add User</button>
-        </form>
       </div>
     </>
   )
