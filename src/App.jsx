@@ -18,18 +18,19 @@ export default function App() {
     fetchData()
   }, [])
 
-  return
-  <>
-    <div>
-      <table>
-        {users.map((user) => (
-          <tr>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-            <td>{user.phone}</td>
-          </tr>
-        ))}
-      </table>
-    </div>
-  </>
+  return (
+    <>
+      <div>
+        <table>
+          {users.map((user) => (
+            <tr>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.phone}</td>
+            </tr>
+          ))}
+        </table>
+      </div>
+    </>
+  )
 }
