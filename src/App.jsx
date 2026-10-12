@@ -18,6 +18,19 @@ export default function App() {
     fetchData()
   }, [])
 
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target)
+    const newUser = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone')
+    }
+
+    setUsers([...users, newUser]);
+  }
+
   return (
     <>
       <div>
@@ -35,10 +48,10 @@ export default function App() {
             </tr>
           ))}
         </table>
-        <form>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="tel" placeholder="Phone" />
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="name" placeholder="Name" />
+          <input type="email" name="email" placeholder="Email" />
+          <input type="tel" name="phone" placeholder="Phone" />
           <button type="submit">Add User</button>
         </form>
       </div>
