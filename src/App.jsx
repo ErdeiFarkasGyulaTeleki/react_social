@@ -30,11 +30,7 @@ export default function App() {
 
     try {
       const response = await axios.post('http://localhost:3000/api/users', newUser);
-      console.log(newUser);
-      console.log('Response:', response);
-      if (response.status === 201) {
-        setUsers([...users, response.data]);
-      }
+      setUsers([...users, response.data]);
     }
     catch (error) {
       console.error('Error adding user:', error);
