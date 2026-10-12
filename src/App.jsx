@@ -16,9 +16,9 @@ export default function App() {
       }
     }
     fetchData()
-  }, [])
+  }, [users])
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target)
@@ -28,7 +28,27 @@ export default function App() {
       phone: formData.get('phone')
     }
 
-    setUsers([...users, newUser]);
+    try {
+      const response = await axios.post('http://localhost:3000/api/users', newUser);
+      console.log(newUser);
+      console.log('Response:', response);
+      if (response.status === 201) {
+        setUsers([...users, response.data]);
+      }
+    }
+    catch (error) {
+      console.error('Error adding user:', error);
+    }
+  }
+
+  async function handleDelete(userId) {
+    try {
+      await axios.delete(`http://localhost:3000/api/users/${userId}`);
+      setUsers(users.filter(user => user.id !== userId));
+    }
+    catch (error) {
+      console.error('Error deleting user:', error);
+    }
   }
 
   return (
@@ -41,18 +61,25 @@ export default function App() {
           <button type="submit">Add User</button>
         </form>
         <table>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-          </tr>
-          {users.map((user) => (
+          <thead>
             <tr>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.phone}</td>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>
+                  <button onClick={() => handleDelete(user.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </>

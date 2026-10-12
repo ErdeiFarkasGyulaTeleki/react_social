@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { createUserStore } from './store.js'
 
 const sortableFields = ['name', 'email', 'phone', 'createdAt', 'updatedAt']
@@ -117,6 +118,7 @@ export function createApp(store = createUserStore()) {
   const app = express()
   app.disable('x-powered-by')
   app.use(express.json({ limit: '32kb' }))
+  app.use(cors());
 
   app.get('/api/health', (_request, response) => {
     response.json({ status: 'ok' })
@@ -162,10 +164,14 @@ export function createApp(store = createUserStore()) {
   })
 
   app.post('/api/users', (request, response) => {
+    console.log('Request body:', request.body)
     const user = normalizeUser(request.body)
+    console.log('Normalized user:', user)
     ensureEmailAvailable(store, user.email)
+    console.log('Email available:', user.email)
     const created = store.createUser(user)
     response.location(`/api/users/${created.id}`).status(201).json({ data: created })
+    console.log('Created user:', created)
   })
 
   app.get('/api/users/:id', (request, response) => {
